@@ -9,21 +9,25 @@
 <h2>INFORMAÇÕES DE LOGIN</h2>
 </h:head> 
 <body> 
+<body> 
 <h:form>
 <h:panelGrid columns="2">
 <h:outputLabel for="nomeUsuario" value="Nome: " />
-<h:inputText id="nomeUsuario" value="#{controllerPessoa.usuario}" />
+<h:inputText id="nomeUsuario" value="#{controllerPessoa.p.nome}" />
 
 <h:outputLabel for="pwdUsuario" value="Senha: " />
-<h:inputSecret id="pwdUsuario" value="#{controllerPessoa.password}" />
+<h:inputSecret id="pwdUsuario" value="#{controllerPessoa.p.pwd}" />
 
-<h:commandButton action="#{controllerPessoa.envia()}" value="Login" />
+<h:commandButton action="#{controllerPessoa.login()}" value="Login"/>
 
 
 </h:panelGrid>
 </h:form>
 
 <h:link value="Retornar à pagina inicial" outcome="/index.xhtml" />
+<h:link value="Cadastrar acesso" outcome="/AddPage.xhtml" />
+
+</body> 
 
 </body> 
 </html>

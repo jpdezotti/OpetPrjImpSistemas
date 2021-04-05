@@ -1,5 +1,8 @@
 package br.edu.opet.Bean;
 
+import java.io.Serializable;
+import java.sql.SQLException;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -8,28 +11,32 @@ import br.edu.opet.Model.Pessoa;
 @ManagedBean
 @SessionScoped
 
-public class ControllerPessoa {
+public class ControllerPessoa implements Serializable {
 	
-	String usuario;
-	String password;
-	
-	private Pessoa p;
+	private Pessoa p = new Pessoa();
 	
 	public ControllerPessoa() {
-		this.p = new Pessoa();
+		
 		
 	}
 	
-	public String envia() {
-		String no = this.p.getNome();
-		String pw = this.p.getPwd();
-		if (this.usuario == no && this.password == pw){	
-			return "/loginValido.xhtml";			
-		} else {
-			return "/loginInvalido.xhtml";	
-		}
+	public void login() {
+		
 	}
-
+	
+	public String inserir () throws SQLException {
+		this.p.inserir();
+		return this.p.inserir();		
+	}
+	public void alterar () {
+		
+	}
+	public void excluir () {
+		
+	}
+	public void consultar () {
+		
+	}
 
 	public Pessoa getP() {
 		return p;
@@ -39,27 +46,6 @@ public class ControllerPessoa {
 		this.p = p;
 	}
 
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	public String getTexto() {
-		String texto = "chegou aqui no GetTexto";
-		return texto;
-	}
-	
-	
+		
 
 }

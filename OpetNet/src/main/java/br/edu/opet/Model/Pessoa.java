@@ -1,12 +1,40 @@
 package br.edu.opet.Model;
 
-public class Pessoa {
+import java.sql.SQLException;
+
+import br.edu.opet.DAO.PessoaDAO;
+
+public class Pessoa extends PessoaDAO {
+
+
+	private String nome;
+	private String email;
+	private String pwd;
 	
-	private String nome="admin";
-	private String email="admin@opet.com.br";
-	private String pwd="naoeadmin";
-	
-	public Pessoa() {}
+	public Pessoa(String nome, String email, String pwd) {
+		this.nome = nome;
+		this.email = email;
+		this.pwd = pwd;
+		
+	}
+	public Pessoa() {
+		
+	}
+		
+	public String inserir () throws SQLException {	
+		super.inserir(this);
+		return super.inserir(this);		
+	}
+	public void alterar () {
+		
+	}
+	public void excluir () {
+		
+	}
+	public void consultar () {
+		
+	}
+
 
 	public String getNome() {
 		return nome;
@@ -31,15 +59,9 @@ public class Pessoa {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	public String login(String n, String p){
-		if (n == nome && p == pwd) {
-			return "CREDENCIAIS VÁLIDAS";
-		} else {
-			return "CREDENCIAIS INVÁLIDAS. TENTE NOVAMENTE";
-		}
-	
+	public String login() {
+		return null;
+		
 	}
 	
-	
-
 }
