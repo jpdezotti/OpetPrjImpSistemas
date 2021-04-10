@@ -1,13 +1,12 @@
 package br.edu.opet.Bean;
 
 import java.io.Serializable;
-import java.sql.SQLException;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import br.edu.opet.Model.Pessoa;
 
+@SuppressWarnings("serial")
 @ManagedBean
 @SessionScoped
 
@@ -20,13 +19,23 @@ public class ControllerPessoa implements Serializable {
 		
 	}
 	
-	public void login() {
-		
+	public String login() {
+		String resul = this.p.login();		
+		if (resul == "true") {
+			return "/PrincipalOpet.xhtml";
+		}else {
+			return "/loginInvalido.xhtml";
+		}
 	}
 	
-	public String inserir () throws SQLException {
-		this.p.inserir();
-		return this.p.inserir();		
+	public String inserir ()  {
+		String resul = this.p.inserir();
+		if (resul == "true") {
+			return "/cadastroValido.xhtml";
+		}else {
+			return "/cadastroInvalido.xhtml";
+		}
+				
 	}
 	public void alterar () {
 		

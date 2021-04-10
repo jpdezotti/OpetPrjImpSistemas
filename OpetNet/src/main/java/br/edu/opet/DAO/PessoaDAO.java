@@ -1,14 +1,39 @@
 package br.edu.opet.DAO;
 
+import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.jboss.security.Base64Encoder;
 
 import br.edu.opet.Model.Pessoa;
 import br.edu.opet.util.BancoDeDados;
 
 
 public class PessoaDAO {	
+	
+	
+	public String criptografa(String senha){
+		try {
+			MessageDigest digest = MessageDigest.getInstance("MD5");
+			digest.update(senha.getBytes()); 
+
+			//Base64Encoder encoder = new Base64Encoder(); 
+			return Base64Encoder.encode(digest.digest());
+			
+		} catch (NoSuchAlgorithmException e) {
+			System.err.println("Erro do Digest : "+e.getMessage());
+			
+		} catch (IOException e1) {
+			System.err.println("Erro do Encoder : "+e1.getMessage());
+		}
+		 
+		return senha;
+	}
 	
 		
 	public String inserir (Pessoa p)  {
@@ -20,35 +45,28 @@ public class PessoaDAO {
 				//pstm.setInt(1, adicionar1.nextval);
 				pstm.setString(1, p.getNome());
 				pstm.setString(2, p.getEmail());
-				pstm.setString(3, p.getPwd());
+				pstm.setString(3, criptografa(p.getPwd()));
 				int row = pstm.executeUpdate();
 				if (row != 1) {
 					conn.rollback();
-					return "loginInvalido.xhtml";
+					return "false";
 				} else {
 					conn.commit();
 					
 				}
 				pstm.close();
 				conn.close();
-				return "loginValido.xhtml";
+				return "true";
 			} catch (SQLException e) {
-				System.err.println("Não foi possível persistir no BD ("+e.getErrorCode()+" - "+e.getMessage()+")");
-				
+				System.err.println("Não foi possível persistir no BD ("+e.getErrorCode()+" - "+e.getMessage()+")");			
 				try {
 					pstm.close();
 					conn.close();
 				} catch (SQLException e1) {
 					System.err.println("Não foi possível fechar a conexão com o BD ("+e.getErrorCode()+" - "+e.getMessage()+")");
 				}
-
-				return  "loginInvalido.xhtml";
+				return  "false";
 			}
-			
-			
-			
-		
-		
 	}
 	public void alterar () {
 		
@@ -59,6 +77,34 @@ public class PessoaDAO {
 	public void consultar () {
 		
 	}
-	
+	public String login(Pessoa p) {
+		Connection conn = BancoDeDados.getConexao();		
+		PreparedStatement pstm = null;		
+			try {
+				pstm = conn.prepareStatement("select nome, pwd from pessoa where nome = ? and pwd = ?");
+				//pstm.setInt(1, adicionar1.nextval);
+				pstm.setString(1, p.getNome());
+				pstm.setString(2, criptografa(p.getPwd()));
+				ResultSet row = pstm.executeQuery();
+				row.next();
+				System.out.println(row.getString("nome"));
+				System.out.println(row.getString("pwd"));				
+				row.close();
+				pstm.close();
+				conn.close();
+				return "true";
+			} catch (SQLException e) {
+				System.err.println("Não foi possível receber dados do BD ("+e.getErrorCode()+" - "+e.getMessage()+")");
+				
+				try {
+					pstm.close();
+					conn.close();
+				} catch (SQLException e1) {
+					System.err.println("Não foi possível fechar a conexão com o BD ("+e.getErrorCode()+" - "+e.getMessage()+")");
+				}
 
+				return  "false";
+			}
+			
+	}
 }

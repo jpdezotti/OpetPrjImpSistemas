@@ -1,11 +1,9 @@
 package br.edu.opet.Model;
 
-import java.sql.SQLException;
 
 import br.edu.opet.DAO.PessoaDAO;
 
 public class Pessoa extends PessoaDAO {
-
 
 	private String nome;
 	private String email;
@@ -21,9 +19,14 @@ public class Pessoa extends PessoaDAO {
 		
 	}
 		
-	public String inserir () throws SQLException {	
-		super.inserir(this);
-		return super.inserir(this);		
+	public String login() {
+		String resul = super.login(this);
+		return resul;		
+		
+	}
+	public String inserir ()  {	
+		String resul = super.inserir(this);
+		return resul;		
 	}
 	public void alterar () {
 		
@@ -59,9 +62,6 @@ public class Pessoa extends PessoaDAO {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	public String login() {
-		return null;
-		
-	}
+	
 	
 }
