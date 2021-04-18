@@ -1,0 +1,18 @@
+
+body{
+	background-color: green;
+}
+.h2{
+	color: blue;
+	font-family: serif;
+	font-size: 12px;
+}
+.container{
+	background-color: #c0c0c0;
+	font-family: serif;
+	font-size: 12px;
+}
+.btnCollor {
+	color: red;
+	font-size: 35px;
+}
