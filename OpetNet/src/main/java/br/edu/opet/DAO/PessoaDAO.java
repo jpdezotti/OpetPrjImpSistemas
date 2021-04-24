@@ -1,14 +1,9 @@
 package br.edu.opet.DAO;
 
-import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import org.jboss.security.Base64Encoder;
 
 import br.edu.opet.Model.Pessoa;
 import br.edu.opet.util.BancoDeDados;
@@ -17,29 +12,10 @@ import br.edu.opet.util.Criptografia;
 
 public class PessoaDAO {	
 	
-	//private Criptografia crip;
-	
-	
-	public String criptografa(String senha){
-		try {
-			MessageDigest digest = MessageDigest.getInstance("MD5");
-			digest.update(senha.getBytes()); 
-
-			//Base64Encoder encoder = new Base64Encoder(); 
-			return Base64Encoder.encode(digest.digest());
-			
-		} catch (NoSuchAlgorithmException e) {
-			System.err.println("Erro do Digest : "+e.getMessage());
-			
-		} catch (IOException e1) {
-			System.err.println("Erro do Encoder : "+e1.getMessage());
-		}
-		 
-		return senha;
-	}
+	private Criptografia crip;
 	
 	public PessoaDAO () {
-		//this.crip = new Criptografia();
+		this.crip = new Criptografia();
 	}
 	
 		
@@ -50,7 +26,7 @@ public class PessoaDAO {
 				pstm = conn.prepareStatement("insert into pessoa (codigo,nome, pwd,login, ano, curso) values (addNumber.nextval,?,?,?,?,?)");
 				//pstm.setInt(1, addNumber.nextval);
 				pstm.setString(1, p.getNome());
-				pstm.setString(2, criptografa(p.getPwd()));
+				pstm.setString(2, crip.criptografa(p.getPwd()));
 				pstm.setString(3, p.getLogin());
 				pstm.setInt(4, p.getAno());
 				pstm.setInt(5, p.getCurso());
@@ -92,7 +68,7 @@ public class PessoaDAO {
 				pstm = conn.prepareStatement("select login, pwd from pessoa where login = ? and pwd = ?");
 				//pstm.setInt(1, adicionar1.nextval);
 				pstm.setString(1, p.getLogin());
-				pstm.setString(2, criptografa(p.getPwd()));
+				pstm.setString(2, crip.criptografa(p.getPwd()));
 				ResultSet row = pstm.executeQuery();
 				row.next();
 				System.out.println(row.getString("login"));
