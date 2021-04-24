@@ -16,24 +16,39 @@
 		integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
 		crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
-	
+
 </h:head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm" style="text-align: center;">
-			<h2>CADASTRAR NOVO ACESSO</h2>
+				<h2>CADASTRAR NOVO ACESSO</h2>
 				<h:form>
+			
 					<h:panelGrid columns="2">
 
-						<h:outputLabel for="nomeUsuario" value="Nome: " />
-						<h:inputText id="nomeUsuario" value="#{controllerPessoa.p.nome}" />
+						<h:outputLabel for="nomeUsuario" value="Nome Completo: " />
+						<h:inputText id="nomeUsuario" value="#{controllerPessoa.p.nome}"
+							required="true" />
 
-						<h:outputLabel for="emailUsuario" value="Email: " />
-						<h:inputText id="emailUsuario" value="#{controllerPessoa.p.email}" />
+						<h:outputLabel for="loginUsuario" value="Login: " />
+						<h:inputText id="loginUsuario" value="#{controllerPessoa.p.login}"
+						required="true" validatorMessage="O LOGIN NÃO PODE CONTER ESPAÇOS">
+							<f:validateRegex for="loginUsuario" pattern="^\S+$"></f:validateRegex>						
+						</h:inputText>
 
-						<h:outputLabel for="pwdUsuario" value="Senha: " />
-						<h:inputSecret id="pwdUsuario" value="#{controllerPessoa.p.pwd}" />
+						<h:outputLabel for="anoInicio" value="Ano de Início: " />
+						<h:inputText id="anoInicio" value="#{controllerPessoa.p.ano}"
+							required="true" />
+							
+						<h:outputLabel for="curso" value="Selecione um Curso: " />
+						<h:selectOneMenu value="#{controllerPessoa.p.curso}" >
+							<f:selectItems value="#{controllerPessoa.c.listar()}" var="curso" itemLabel="#{curso.nomeCurso}" itemValue="#{curso.idCurso}"/>						
+						</h:selectOneMenu>
+												
+						<h:outputLabel for="pwd" value="Senha: " />
+						<h:inputSecret id="pwd" value="#{controllerPessoa.p.pwd}"
+							required="true" />
 
 						<h:commandButton action="#{controllerPessoa.inserir()}"
 							value="Salvar" />
@@ -41,6 +56,7 @@
 
 
 					</h:panelGrid>
+					<h:message for="loginUsuario"/>
 				</h:form>
 			</div>
 		</div>

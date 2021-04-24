@@ -12,9 +12,12 @@ import org.jboss.security.Base64Encoder;
 
 import br.edu.opet.Model.Pessoa;
 import br.edu.opet.util.BancoDeDados;
+import br.edu.opet.util.Criptografia;
 
 
 public class PessoaDAO {	
+	
+	//private Criptografia crip;
 	
 	
 	public String criptografa(String senha){
@@ -35,17 +38,22 @@ public class PessoaDAO {
 		return senha;
 	}
 	
+	public PessoaDAO () {
+		//this.crip = new Criptografia();
+	}
+	
 		
 	public String inserir (Pessoa p)  {
 		Connection conn = BancoDeDados.getConexao();		
 		PreparedStatement pstm = null;
-	
 			try {
-				pstm = conn.prepareStatement("insert into pessoa (nome, email, pwd) values (?,?,?)");
-				//pstm.setInt(1, adicionar1.nextval);
+				pstm = conn.prepareStatement("insert into pessoa (codigo,nome, pwd,login, ano, curso) values (addNumber.nextval,?,?,?,?,?)");
+				//pstm.setInt(1, addNumber.nextval);
 				pstm.setString(1, p.getNome());
-				pstm.setString(2, p.getEmail());
-				pstm.setString(3, criptografa(p.getPwd()));
+				pstm.setString(2, criptografa(p.getPwd()));
+				pstm.setString(3, p.getLogin());
+				pstm.setInt(4, p.getAno());
+				pstm.setInt(5, p.getCurso());
 				int row = pstm.executeUpdate();
 				if (row != 1) {
 					conn.rollback();
@@ -81,13 +89,13 @@ public class PessoaDAO {
 		Connection conn = BancoDeDados.getConexao();		
 		PreparedStatement pstm = null;		
 			try {
-				pstm = conn.prepareStatement("select nome, pwd from pessoa where nome = ? and pwd = ?");
+				pstm = conn.prepareStatement("select login, pwd from pessoa where login = ? and pwd = ?");
 				//pstm.setInt(1, adicionar1.nextval);
-				pstm.setString(1, p.getNome());
+				pstm.setString(1, p.getLogin());
 				pstm.setString(2, criptografa(p.getPwd()));
 				ResultSet row = pstm.executeQuery();
 				row.next();
-				System.out.println(row.getString("nome"));
+				System.out.println(row.getString("login"));
 				System.out.println(row.getString("pwd"));				
 				row.close();
 				pstm.close();

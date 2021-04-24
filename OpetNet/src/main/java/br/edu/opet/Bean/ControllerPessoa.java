@@ -2,24 +2,33 @@ package br.edu.opet.Bean;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
+import br.edu.opet.Model.Curso;
 import br.edu.opet.Model.Pessoa;
 
-@SuppressWarnings("serial")
+
 @ManagedBean
-@SessionScoped
+@RequestScoped
 
 public class ControllerPessoa implements Serializable {
 	
-	private Pessoa p = new Pessoa();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Pessoa p;
+	private Curso c;
 	
 	public ControllerPessoa() {
-		
+		this.p = new Pessoa();	
+		this.c = new Curso();
 		
 	}
 	
-	public String login() {
+
+	
+	public String login() { 
 		String resul = this.p.login();		
 		if (resul == "true") {
 			return "/PrincipalOpet.xhtml";
@@ -45,6 +54,14 @@ public class ControllerPessoa implements Serializable {
 	}
 	public void consultar () {
 		
+	}
+
+	public Curso getC() {
+		return c;
+	}
+
+	public void setC(Curso c) {
+		this.c = c;
 	}
 
 	public Pessoa getP() {

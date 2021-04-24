@@ -4,41 +4,62 @@ package br.edu.opet.Model;
 import br.edu.opet.DAO.PessoaDAO;
 
 public class Pessoa extends PessoaDAO {
-
-	private String nome;
-	private String email;
-	private String pwd;
 	
-	public Pessoa(String nome, String email, String pwd) {
+	private Pessoa p;
+	
+	private int codigo;
+	private String nome;
+	private String login;
+	private String pwd;
+	private int ano;
+	private int curso;
+	
+	public Pessoa(String nome, String pwd, String login, int ano, int curso) {		
+		this.ano = ano;
+		this.login = login;
 		this.nome = nome;
-		this.email = email;
 		this.pwd = pwd;
+		this.curso = curso;
 		
 	}
 	public Pessoa() {
-		
 	}
-		
+			
 	public String login() {
 		String resul = super.login(this);
 		return resul;		
 		
 	}
-	public String inserir ()  {	
+	public String inserir ()  {
 		String resul = super.inserir(this);
 		return resul;		
 	}
-	public void alterar () {
-		
+	
+	public int getCodigo() {
+		return codigo;
 	}
-	public void excluir () {
-		
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
-	public void consultar () {
-		
+	public String getLogin() {
+		return login;
 	}
-
-
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	public int getAno() {
+		return ano;
+	}
+	public void setAno(int ano) {
+		this.ano = ano;
+	}
+	public int getCurso() {
+		return curso;
+	}
+	public void setCurso(int curso) {
+		this.curso = curso;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -47,14 +68,7 @@ public class Pessoa extends PessoaDAO {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
+	
 	public String getPwd() {
 		return pwd;
 	}
@@ -63,5 +77,11 @@ public class Pessoa extends PessoaDAO {
 		this.pwd = pwd;
 	}
 	
+	public Pessoa getP() {
+		return p;
+	}
+	public void setP(Pessoa p) {
+		this.p = p;
+	}
 	
 }
